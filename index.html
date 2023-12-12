@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+
+
+    <style>
+        /* === Globle CSS === */
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body {
+            background-color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* === CSS for timer section === */
+
+        #timerSection {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #inputTime {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+        }
+
+        #inputTime div {
+            margin: 5px;
+
+        }
+
+        #inputTime label {
+            color: white;
+            opacity: 0.9;
+            font-size: 30px;
+            margin: 20px;
+        }
+
+        #inputTimeDiv1 input {
+            opacity: 0.7;
+            border: 2px solid grey;
+            color: red;
+            font-size: 20px;
+
+        }
+
+        #inputTimeDiv2 button {
+            width: 250px;
+            height: 50px;
+            background-color: transparent;
+            border-bottom: 2px solid red;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            color: white;
+            font-size: 20px;
+            margin: 50px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bolder;
+        }
+
+        #inputTimeDiv2 button:hover {
+            background-color: red;
+            opacity: 0.7;
+        }
+
+        #inputTimeDiv3 p {
+            color: white;
+            font-size: 30px;
+            word-spacing: 5px;
+            display: inline-block;
+        }
+
+        #writeSelectDateTime {
+            border-bottom: 2px solid orange;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+
+        }
+
+        #outputTime {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .outDiv {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 45px;
+
+        }
+
+        .outDiv p {
+            color: white;
+            font-size: 20px;
+            margin: 10px;
+        }
+
+        .outDiv input {
+            text-align: center;
+            width: 60px;
+            height: 60px;
+            font-size: 35px;
+            margin: 20px;
+            color: white;
+            background-color: transparent;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 2px solid orange;
+
+        }
+
+        /* === CSS for main section === */
+        .main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .screen {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 100px;
+        }
+
+        .screen p {
+            display: inline-block;
+            color: white;
+            font-size: 190px;
+            margin: 50px 20px;
+            padding: 20px;
+            color: white;
+
+        }
+
+        .button button {
+            width: 170px;
+            height: 50px;
+            background-color: transparent;
+            border-bottom: 2px solid red;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            color: white;
+            font-size: 20px;
+            margin: 50px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bolder;
+        }
+
+        .button button:hover {
+            background-color: red;
+            opacity: 0.7;
+        }
+
+
+        /* === CSS For Screen Change button === */
+        .screenChangeButton button {
+            width: 250px;
+            height: 50px;
+            background-color: transparent;
+            border-bottom: 2px solid red;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            color: white;
+            font-size: 20px;
+            margin: 30px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bolder;
+        }
+
+        .screenChangeButton button:hover {
+            background-color: red;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- === Section For Timer === -->
+    <section id="timerSection">
+        <div id="inputTime">
+            <div id="inputTimeDiv1">
+                <label for="selectDateTime">Input Ending Date (MM-DD-YYYY 14:40) : </label>
+                <input type="datetime" id="testInput" placeholder="(MM-DD-YYYY 14:40)" value="" pattern="">
+            </div>
+            <div id="inputTimeDiv2">
+                <button onclick="selectDateTime()">Enter</button>
+            </div>
+            <div id="inputTimeDiv3">
+                <p>Your Selected Time and Date is : </p>
+                <p id="writeSelectDateTime"></p>
+            </div>
+        </div>
+        <div id="outputTime">
+            <div class="outDiv">
+                <input id="daysOutput" type="text" readonly value="0">
+                <p>DAYS</p>
+            </div>
+            <div class="outDiv">
+                <input id="hoursOutput" type="text" readonly value="0">
+                <p>HOURS</p>
+            </div>
+            <div class="outDiv">
+                <input id="minutesOutput" type="text" readonly value="0">
+                <p>MINUTE</p>
+            </div>
+            <div class="outDiv">
+                <input id="secOutput" type="text" readonly value="0">
+                <p>SECONDS</p>
+            </div>
+        </div>
+        <div class="screenChangeButton">
+            <button id="gotoSection2" onclick="startCountdown()">Start Countdown</button>
+        </div>
+        <div class="screenChangeButton">
+            <button id="gotoSection2" onclick="moveStopWatch()">Stop Watch</button>
+        </div>
+    </section>
+
+    <!-- === Section For StopWatch === -->
+
+    <section class="main" id="main" style="display: none;">
+        <div class="screen">
+            <p id="hr"></p>
+            <p>:</p>
+            <p id="min"></p>
+            <p>:</p>
+            <p id="sec"></p>
+        </div>
+        <div class="button">
+            <button id="start" onclick="startFunction()">Start</button>
+            <button id="pause" onclick="pauseFunction()" style="display:none">Pause</button>
+            <button id="reset" onclick="resetFunction()">Reset</button>
+        </div>
+        <div class="screenChangeButton">
+            <button id="gotoSection1" onclick="moveToTimerDisplay()">Timer</button>
+        </div>
+    </section>
+
+
+    <!-- JavaScript -->
+    <script>
+        /* === JavaScript For Timer === */
+
+
+        var abc;
+
+
+
+        function moveStopWatch() {
+            document.getElementById("main").style = "display:flex"
+            document.getElementById("timerSection").style = "display:none"
+
+        }
+        function startCountdown() {
+            abc = setInterval(selectDateTime, 1000);
+        }
+
+        // functon for input value
+
+        function selectDateTime() {
+
+            var testDate = document.getElementById("testInput").value;
+            document.getElementById("writeSelectDateTime").innerText = testDate;
+
+            // conver date 
+
+            var endDate = new Date(testDate);
+            console.log("Date You Enter :" + " " + endDate);
+
+            // diffrence between Two Date 
+
+            var curruntTime = new Date();
+            console.log("Current Date Date :" + " " + curruntTime);
+            var dif = endDate - curruntTime;
+            console.log("Diffrence in mili Second :" + "" + dif);
+
+
+            // calculation days,hourse,minutes
+
+            /*
+            1 day = 24hr
+            24 hr = 60 min
+            1 min = 60 sec
+            1 sec =1000 miliSec 
+
+            convert in days = miliSecond/(1000*60*60*24)
+            convert in hr = miliSecond/(1000*60*60)
+            convert in min = miliSecond/(1000*60)
+            convert in sec = miliSecond/(1000)
+
+            */
+
+
+            var days = parseInt(dif / (1000 * 60 * 60 * 24));
+            console.log("Dyas :" + " " + days);
+
+            var hr = dif / (1000 * 60 * 60);
+            var hr2 = parseInt(hr) % 24;
+            console.log("hr :" + " " + hr2);
+
+            var min2 = dif / (1000 * 60);
+            var min3 = parseInt(min2) % 60;
+            console.log("min :" + " " + min3);
+
+
+            var sec2 = dif / (1000);
+            var sec3 = parseInt(sec2) % 60;
+            console.log("min :" + " " + sec3);
+
+            if (sec3 == 0 && min3 == 0 && hr2 == 0 && days == 0) {
+
+                clearInterval(abc);
+
+            }
+
+
+
+
+
+
+            document.getElementById("daysOutput").value = days;
+            document.getElementById("hoursOutput").value = hr2;
+            document.getElementById("minutesOutput").value = min3;
+            document.getElementById("secOutput").value = sec3;
+
+        }
+
+
+        /* === JavaScript Fro StopWatch === */
+        var a;
+        var hr = 0;
+        var min = 0;
+        var sec = 0;
+        allSetZero();
+        function allSetZero() {
+            document.getElementById("sec").innerText = 0;
+            document.getElementById("min").innerText = 0;
+            document.getElementById("hr").innerText = 0;
+        }
+
+        function setSec() {
+            sec = sec + 1;
+            if (sec == 59) {
+                sec = 0;
+                min = min + 1;
+            }
+            if (min == 59) {
+                min = 0;
+                hr = hr + 1;
+            }
+            document.getElementById("sec").innerText = sec;
+            document.getElementById("min").innerText = min;
+            document.getElementById("hr").innerText = hr;
+        }
+
+
+
+
+
+        function startFunction() {
+            a = setInterval(setSec, 1000);
+            document.getElementById("start").style = "display:none";
+            document.getElementById("pause").style = "display:inline";
+        }
+        function pauseFunction() {
+            clearInterval(a);
+            document.getElementById("pause").style = "display:none";
+            document.getElementById("start").style = "display:inline";
+        }
+        function resetFunction() {
+            clearInterval(a);
+            hr = 0;
+            min = 0;
+            sec = 0;
+            allSetZero();
+            pauseFunction();
+        }
+        function moveToTimerDisplay() {
+            document.getElementById("main").style = "display:none"
+            document.getElementById("timerSection").style = "display:flex"
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>
